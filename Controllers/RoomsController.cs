@@ -3,11 +3,10 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace App.Controllers
 {
-    [Route("")]
+    [Route("/[controller]")]
     [ApiController]
     public class RoomsController : ControllerBase
     {
-      
         [HttpGet(Name = nameof(GetRooms))]
         public IActionResult GetRooms()
         {
