@@ -31,6 +31,7 @@ namespace App
             services
             .AddMvc(options=> {
                 options.Filters.Add<JsonExceptionFilter>();
+                options.Filters.Add<RequireHttpsOrCloseAttribute>();
                 })
             .SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
             services.AddRouting(options=> options.LowercaseUrls= true);
@@ -45,6 +46,12 @@ namespace App
                 options.ReportApiVersions = true;
                 options.ApiVersionSelector =
                 new CurrentImplementationApiVersionSelector(options);
+            });
+
+            services.AddCors(options =>
+            {
+                options.AddPolicy("AllowMyApp",
+                    policy => policy.AllowAnyOrigin());
             });
         }
 
@@ -64,6 +71,7 @@ namespace App
             }
 
             app.UseHttpsRedirection();
+            app.UseCors("AllowMyApp");
             app.UseMvc();
             
         }
