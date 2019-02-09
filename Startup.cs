@@ -3,7 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using App.Filters;
+using App.Infrastructure;
 using App.Models;
+using App.Service;
+using AutoMapper;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -62,6 +65,10 @@ namespace App
             services.AddDbContext<HotelApiDbContext>(
             options => options.UseInMemoryDatabase("landondb")
                 );
+
+            services.AddScoped<IRoomService, DefaultRoomService>();
+
+            services.AddAutoMapper(options => options.AddProfile<MappingProfile>());
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
